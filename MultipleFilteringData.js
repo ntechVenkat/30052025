@@ -5,7 +5,7 @@ import Table from "./Table";
 const BrPostApi = () => {
   const [applications, setApplications] = useState([]);
   const [search, setSearch] = useState({
-    applicationId: "",
+    applicationType: "",
     applicantName: "",
     district: "",
     localityName: "",
@@ -33,16 +33,20 @@ const BrPostApi = () => {
     e.preventDefault();
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });
-    console.log(search);
   };
 
   const clickSearchApplications = () => {
+    console.log(search);
     const filteredApplications = applications.filter(
       (each) =>
-        each.application_id === search.applicationId ||
-        each.applicant_name === search.applicantName ||
-        each.district_name === search.district ||
-        each.locality === search.localityName
+        (search.applicationType
+          ? each.application_type === search.applicationType
+          : true) &&
+        (search.applicantName
+          ? each.applicant_name === search.applicantName
+          : true) &&
+        (search.district ? each.district_name === search.district : true) &&
+        (search.localityName ? each.locality === search.localityName : true)
     );
     console.log(filteredApplications);
     setApplications(filteredApplications);
@@ -55,9 +59,9 @@ const BrPostApi = () => {
         <input
           type="text"
           className="m-2"
-          placeholder="Application Id"
-          name="applicationId"
-          value={search.applicationId}
+          placeholder="Application Type"
+          name="applicationType"
+          value={search.applicationType}
           onChange={changeHandler}
         />
         <input

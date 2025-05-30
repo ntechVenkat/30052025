@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const Table = (props) => {
   const { applications } = props;
@@ -26,7 +26,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {applications.map((each, index) => (
+          {applications?.map((each, index) => (
             <tr key={index}>
               <td>{each.id}</td>
               <td>{each.application_id}</td>
@@ -39,17 +39,17 @@ const Table = (props) => {
               <td>{each.locality}</td>
               <td>{each.survey_no}</td>
               <td>{each.plot_no}</td>
-              <td key={index}>
+              <td>
                 <ol>
-                  {each.documents.map((eachDoc, index) => (
-                    <>
+                  {each.documents?.map((eachDoc, index) => (
+                    <Fragment key={index}>
                       <li>
-                        <a href={eachDoc} key={index} target="blank">
+                        <a href={eachDoc} target="blank">
                           Docs
                         </a>{" "}
                         <br />
                       </li>
-                    </>
+                    </Fragment>
                   ))}
                 </ol>
               </td>
